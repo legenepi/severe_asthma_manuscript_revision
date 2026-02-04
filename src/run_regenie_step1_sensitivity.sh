@@ -14,7 +14,7 @@
 
 PATH_DATA="/data/gen1/UKBiobank_500K/severe_asthma/Noemi_PhD/data/"
 scratch_dir="/scratch/gen1/nnp5/manuscript_revision"
-pheno="broad_pheno_1_5_ratio"
+#pheno="broad_pheno_1_5_ratio"
 software_path="/home/n/nnp5/software"
 
 #use REGENIE v2.2.4 as used for the discovery GWAS:
@@ -39,18 +39,36 @@ software_path="/home/n/nnp5/software"
 #  --out ${scratch_dir}/BMI_${pheno}.regenie.step1
 
 #For Smoking status (SI column) covariate:
+#${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \
+#  --step 1 \
+#  --bed ${scratch_dir}/ukb_cal_allchr_v2 \
+#  --extract ${scratch_dir}/ukb_cal_allchr_eur_qc.snplist \
+#  --keep ${scratch_dir}/ukb_cal_allchr_eur_qc.id \
+#  --phenoFile ${PATH_DATA}/demo_EUR_pheno_cov_smokingstatus.txt \
+#  --phenoCol ${pheno} \
+#  --covarFile ${PATH_DATA}/demo_EUR_pheno_cov_smokingstatus.txt \
+#  --covarColList age_at_recruitment,age2,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10,genetic_sex,SI \
+#  --bt \
+#  --bsize 1000 \
+#  --loocv \
+#  --threads 4 \
+#  --gz \
+#  --out ${scratch_dir}/SI_${pheno}.regenie.step1
+
+#For All asthma vs controls:
+pheno="pheno_allasthma"
 ${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \
   --step 1 \
   --bed ${scratch_dir}/ukb_cal_allchr_v2 \
   --extract ${scratch_dir}/ukb_cal_allchr_eur_qc.snplist \
   --keep ${scratch_dir}/ukb_cal_allchr_eur_qc.id \
-  --phenoFile ${PATH_DATA}/demo_EUR_pheno_cov_smokingstatus.txt \
+  --phenoFile ${PATH_DATA}/demo_EUR_pheno_cov_allasthma.txt \
   --phenoCol ${pheno} \
-  --covarFile ${PATH_DATA}/demo_EUR_pheno_cov_smokingstatus.txt \
-  --covarColList age_at_recruitment,age2,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10,genetic_sex,SI \
+  --covarFile ${PATH_DATA}/demo_EUR_pheno_cov_allasthma.txt \
+  --covarColList age_at_recruitment,age2,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10,genetic_sex \
   --bt \
   --bsize 1000 \
   --loocv \
   --threads 4 \
   --gz \
-  --out ${scratch_dir}/SI_${pheno}.regenie.step1
+  --out ${scratch_dir}/${pheno}.regenie.step1
