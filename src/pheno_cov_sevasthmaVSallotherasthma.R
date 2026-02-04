@@ -7,6 +7,8 @@ suppressMessages(library(tidyverse))
 suppressMessages(library(data.table))
 
 args <- commandArgs(T)
+path_prefix_1 = args[1]
+path_prefix_2 = args[2]
 
 #Read files:
 demo_eur <- fread(paste0(path_prefix_1,"demo_EUR_pheno_cov_broadasthma.txt"))
@@ -45,5 +47,6 @@ table(demo_eur_exacerbation$pheno_sa_otherashtma)
 ##save output phenotype-covariate file:
 write.table(demo_eur_exacerbation, paste0(path_prefix_2,"demo_EUR_pheno_cov_SAvsOtherAsthma_noexacerbation.txt"),  row.names=F, quote=F, sep="\t", na = "NA")
 
-
+#run as :
+#Rscript src/pheno_cov_sevasthmaVSallotherasthma.R "/rfs/TobinGroup/GWAtraits/severe_asthma/" "/data/gen1/UKBiobank_500K/severe_asthma/Noemi_PhD/data/"
 

@@ -13,6 +13,6 @@ Rscript ${src_path}/pheno_cov_sevasthmaVSallotherasthma.R "prefix_path_1" "prefi
 #GWAS:
 sbatch ${src_path}/plink_QC_eur.sh
 sbatch ${src_path}/run_regenie_step1.sh #running this at the moment
-sbatch -a 1-22 ${src_path}run_regenie_step2.sh
+sbatch -a 1-22 ${src_path}/run_regenie_step2.sh
 
 #Post GWAS:
