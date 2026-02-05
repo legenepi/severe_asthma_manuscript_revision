@@ -2,10 +2,10 @@
 
 #Regenie Step 1
 
-#SBATCH --job-name=regenie1
+#SBATCH --job-name=regenie1_saVSallotherasthma
 #SBATCH --cpus-per-task=3
 #SBATCH --mem=140G
-#SBATCH --time=15:00:00
+#SBATCH --time=32:00:00
 #SBATCH --export=NONE
 #SBATCH --output=R-%x.%j.out
 #SBATCH --error=R-%x.%j.err

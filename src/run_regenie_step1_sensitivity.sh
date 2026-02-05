@@ -1,16 +1,20 @@
 #!/bin/bash
 
 #Regenie Step 1for sensitivity analyses: smoking and BMI
+#Regenie Step 1for all-asthma vs controls gwas
 
-#SBATCH --job-name=regenie1_SI
+#SBATCH --job-name=regenie1__allasthmavscontrols
 #SBATCH --cpus-per-task=3
 #SBATCH --mem=140G
-#SBATCH --time=15:00:00
+#SBATCH --time=32:00:00
 #SBATCH --export=NONE
 #SBATCH --output=R-%x.%j.out
 #SBATCH --error=R-%x.%j.err
 
-#the job is called # regenie_BMI when run for BMI as covariate
+#the job is called:
+# regenie1_BMI when run for BMI as covariate
+# regenie1_SI when run SI as covariate
+# regenie1_allasthmavscontrols when using all asthma vs healthy controls
 
 PATH_DATA="/data/gen1/UKBiobank_500K/severe_asthma/Noemi_PhD/data/"
 scratch_dir="/scratch/gen1/nnp5/manuscript_revision"
