@@ -40,7 +40,7 @@ table(demo_eur_exacerbation$pheno_sa_otherashtma, demo_eur_exacerbation$AnyExac,
 table(demo_eur_exacerbation$pheno_sa_otherashtma, demo_eur_exacerbation$age_onset_merge, useNA = "always")
 ##need to exclude case and control without age at onset information:
 demo_eur_exacerbation <- demo_eur_exacerbation %>% mutate(pheno_sa_otherashtma = if_else(!is.na(age_onset_merge), pheno_sa_otherashtma, NA))
-table(demo_eur_exacerbation$pheno_sa_otherashtma, demo_eur_exacerbation$age_onset_merge, useNA = "always") # chekc again the number as as expected:
+table(demo_eur_exacerbation$pheno_sa_otherashtma, demo_eur_exacerbation$age_onset_merge, useNA = "always") # check again the number as as expected:
 #6053 cases and 26938 controls:
 table(demo_eur_exacerbation$pheno_sa_otherashtma)
 

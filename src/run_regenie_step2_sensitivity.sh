@@ -3,7 +3,6 @@
 #Run regenie step 2 for the sensitivity analyses - BMI and Smoking status
 #This is an interactive job as the association is run for 68 variants only.
 
-i=$SLURM_ARRAY_TASK_ID
 PATH_DATA="/data/gen1/UKBiobank_500K/severe_asthma/Noemi_PhD/data"
 scratch_dir="/scratch/gen1/nnp5/manuscript_revision"
 sample_DIR="/data/gen1/UKBiobank_500K/severe_asthma/data"
@@ -38,6 +37,23 @@ do
     --out ${scratch_dir}/BMI_${pheno}/output/BMI_${pheno}.${i}.regenie.step2
 done
 
+
+#merge all assoc file:
+cov="BMI"
+zcat ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}.1.regenie.step2_${pheno}.regenie.gz | tail -n +2 | \
+     awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    > ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
+
+for i in $(seq 2 22);
+do
+    zcat ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}.${i}.regenie.step2_${pheno}.regenie.gz | \
+    tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    >> ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
+done
+
+
+
+#####
 #For Smoking status (SI column) covariate:
 mkdir ${scratch_dir}/SI_${pheno}
 mkdir ${scratch_dir}/SI_${pheno}/output
@@ -62,5 +78,19 @@ do
     --firth --approx --pThresh 0.01 \
     --pred ${scratch_dir}/SI_${pheno}.regenie.step1_pred.list \
     --bsize 1000 \
-    --out ${scratch_dir}/SI_${pheno}/output/BMI_${pheno}.${i}.regenie.step2
+    --out ${scratch_dir}/SI_${pheno}/output/SI_${pheno}.${i}.regenie.step2
+done
+
+
+#merge all assoc file:
+cov="SI"
+zcat ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}.1.regenie.step2_${pheno}.regenie.gz | tail -n +2 | \
+     awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    > ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
+
+for i in $(seq 2 22);
+do
+    zcat ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}.${i}.regenie.step2_${pheno}.regenie.gz | \
+    tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    >> ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
 done
