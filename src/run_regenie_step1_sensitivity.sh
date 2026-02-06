@@ -59,6 +59,7 @@ software_path="/home/n/nnp5/software"
 #  --gz \
 #  --out ${scratch_dir}/SI_${pheno}.regenie.step1
 
+#Feb 2026: Need to re-do this !
 #For All asthma vs controls:
 pheno="pheno_allasthma"
 ${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \
