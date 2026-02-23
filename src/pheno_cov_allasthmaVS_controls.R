@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 
-#Create a phenotype of ALL asthma as cases and healthy controls
+#Create a phenotype of ALL asthma as cases and respiratory diseases-free controls. Controls are chosen regardless of their
+#primary care prescription records.
 
 #Import libraries
 suppressMessages(library(tidyverse))
@@ -19,7 +20,7 @@ path_prefix_2 = args[2]
 demo_eur <- fread(paste0(path_prefix_1,"demo_EUR_pheno_cov_broadasthma.txt"))
 asthma_diag <- fread(paste0(path_prefix_2,"Eid_intersection_asthma_diagnosis_ATLEAST_1_evidence.txt"),header=F)
 asthma_diag <- asthma_diag %>% rename("IID" = 'V1')
-controls <- fread(paste0(path_prefix_2,"Eid_control_respiratoryfree.txt"))
+controls <- fread(paste0(path_prefix_2,"Eid_control_respiratoryfree_regardless_prescriptions.txt"))
 controls <- controls %>% rename("IID"="V1")
 
 controls$IID <- as.character(controls$IID)
@@ -50,6 +51,3 @@ write.table(demo_eur, paste0(path_prefix_2,"demo_EUR_pheno_cov_allasthma.txt"), 
 
 #run as :
 #Rscript src/pheno_cov_allasthmaVS_controls.R "/rfs/TobinGroup/GWAtraits/severe_asthma/" "/data/gen1/UKBiobank_500K/severe_asthma/Noemi_PhD/data/"
-
-
-
