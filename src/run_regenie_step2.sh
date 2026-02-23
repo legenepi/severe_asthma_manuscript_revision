@@ -42,3 +42,4 @@ ${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \
   --out ${scratch_dir}/${pheno}/output/${pheno}.${i}.regenie.step2
 
 #run as: sbatch -A gen1 -a 1-22 /rfs/TobinGroup/GWAtraits/severe_asthma/severe_asthma_manuscript_revision/src/run_regenie_step2.sh
+#to check that it is ended correctly: grep "End time" R-regenie2_saVSotherashtma.*.out | wc -l
