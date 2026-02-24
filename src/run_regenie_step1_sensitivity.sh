@@ -3,7 +3,7 @@
 #Regenie Step 1for sensitivity analyses: smoking and BMI
 #Regenie Step 1for all-asthma vs controls gwas
 
-#SBATCH --job-name=regenie1__allasthmavscontrols
+#SBATCH --job-name=regenie1_regenie1_allasthmavscontrols
 #SBATCH --cpus-per-task=3
 #SBATCH --mem=140G
 #SBATCH --time=32:00:00
@@ -59,7 +59,6 @@ software_path="/home/n/nnp5/software"
 #  --gz \
 #  --out ${scratch_dir}/SI_${pheno}.regenie.step1
 
-#Feb 2026: Need to re-do this !
 #For All asthma vs controls:
 pheno="pheno_allasthma"
 ${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \

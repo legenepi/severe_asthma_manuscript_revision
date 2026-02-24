@@ -94,3 +94,47 @@ do
     tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
     >> ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
 done
+
+
+#####
+#For All Asthma vs respiratory disease-free controls:
+pheno="pheno_allasthma"
+mkdir ${scratch_dir}/${pheno}
+mkdir ${scratch_dir}/${pheno}/output
+for i in $(seq 1 22);
+do
+  ${software_path}/regenie_v2.2.4.gz_x86_64_Linux_mkl \
+    --step 2 \
+    --bgen /data/ukb/imputed_v3/ukb_imp_chr${i}_v3.bgen \
+    --ref-first \
+    --sample ${sample_DIR}/ukbiobank_app56607_for_regenie.sample \
+    --keep ${scratch_dir}/ukb_cal_allchr_eur_qc.id \
+    --extract ${scratch_dir}/suggestive_variants_SNPID.txt \
+    --phenoFile ${PATH_DATA}/demo_EUR_pheno_cov_allasthma.txt \
+    --phenoCol ${pheno} \
+    --covarFile ${PATH_DATA}/demo_EUR_pheno_cov_allasthma.txt \
+    --covarColList age_at_recruitment,age2,PC1,PC2,PC3,PC4,PC5,PC6,PC7,PC8,PC9,PC10,genetic_sex \
+    --bt \
+    --gz \
+    --threads 4 \
+    --minMAC 10 \
+    --minINFO 0.3 \
+    --firth --approx --pThresh 0.01 \
+    --pred ${scratch_dir}/${pheno}.regenie.step1_pred.list \
+    --bsize 1000 \
+    --out ${scratch_dir}/${pheno}/output/${pheno}.${i}.regenie.step2
+done
+#check that all chromosome run successfully:
+#grep "End time" pheno_allasthma.*.regenie.step2.log | wc -l
+
+#merge all assoc file:
+zcat ${scratch_dir}/${pheno}/output/${pheno}.1.regenie.step2_${pheno}.regenie.gz | tail -n +2 | \
+     awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    > ${scratch_dir}/${pheno}/output/${pheno}_allchr.assoc.txt
+
+for i in $(seq 2 22);
+do
+    zcat ${scratch_dir}/${pheno}/output/${pheno}.${i}.regenie.step2_${pheno}.regenie.gz | \
+    tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
+    >> ${scratch_dir}/${pheno}/output/${pheno}_allchr.assoc.txt
+done

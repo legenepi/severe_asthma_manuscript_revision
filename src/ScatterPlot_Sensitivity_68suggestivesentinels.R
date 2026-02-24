@@ -75,3 +75,30 @@ ggplot(data = df_plot, aes(x = logodds_SI, y = logodds_gwas)) +
     point.padding = unit(0.3, "lines")) +
   theme(legend.position="none")
 dev.off()
+
+##Allasthma vs respiratory disease-free controls:
+all_asthma <- fread("/scratch/gen1/nnp5/manuscript_revision/pheno_allasthma/output/pheno_allasthma_allchr.assoc.txt") %>% select(V3, V10)
+colnames(all_asthma) <- c("snpid", "logodds_all_asthma")
+all_asthma$snpid <- as.character(all_asthma$snpid)
+df_plot <- gwas %>% left_join(all_asthma, by = "snpid")
+df_plot$logOR_diff <- abs(df_plot$logodds_gwas - df_plot$logodds_all_asthma)
+
+
+png("/rfs/TobinGroup/GWAtraits/severe_asthma/Manuscript_review/allasthma_discGWAS_68suggestive_effectsize_comparison.png",units="in", width=10, height=10, res=800)
+ggplot(data = df_plot, aes(x = logodds_all_asthma, y = logodds_gwas)) +
+  sm_statCorr(color = "black", corr_method = "pearson", text_size = 3, size = 0.5) +
+  geom_abline(intercept = 0, slope = 1, color = "grey", size = 0.25, linetype = "dashed") +
+  geom_smooth(method="lm") +
+  geom_point(data = df_plot, aes(x = logodds_all_asthma,color="#D55E00",size=0.15)) +
+  theme_minimal() + geom_vline(xintercept = 0, linetype="dashed", color = "grey", size = 0.25) +
+  geom_hline(yintercept = 0, linetype="dashed", color="grey", size = 0.5) +
+  ylim(-0.8, +0.5) + xlim(-0.8, + 0.5) +
+  xlab("Beta (Sensitivity all asthma vs healthy controls)") + ylab("Beta (Discovery)") +
+  geom_text_repel(
+    data = subset(df_plot, logOR_diff >= 0.1 ),
+    aes(label = snpid),
+    size = 5,
+    box.padding = unit(0.35, "lines"),
+    point.padding = unit(0.3, "lines")) +
+  theme(legend.position="none")
+dev.off()
