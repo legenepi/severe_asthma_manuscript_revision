@@ -50,7 +50,8 @@ do
     tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
     >> ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
 done
-
+#Save the summary stats in /rfs:
+cp ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt ${PATH_DATA}/
 
 
 #####
@@ -94,7 +95,8 @@ do
     tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
     >> ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt
 done
-
+#Save the summary stats in /rfs:
+cp ${scratch_dir}/${cov}_${pheno}/output/${cov}_${pheno}_allchr.assoc.txt ${PATH_DATA}/
 
 #####
 #For All Asthma vs respiratory disease-free controls:
@@ -138,3 +140,6 @@ do
     tail -n +2 | awk -F " " '{print $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13}' \
     >> ${scratch_dir}/${pheno}/output/${pheno}_allchr.assoc.txt
 done
+
+#Save the summary stats in /rfs:
+cp ${scratch_dir}/${pheno}/output/${pheno}_allchr.assoc.txt ${PATH_DATA}/
